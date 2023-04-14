@@ -48,6 +48,10 @@ def verify_superuser(function):
         user = User.objects.filter(id=decoded.get("user_id")).first()
         if not user:
             return Response({"Message": "Invalid user"}, status=400)
+        if not user.is_superuser:
+            return Response({"Message": "permission denied"}, status=400)
+
+
         request.data.update({"user":user.id})
 
         return function(self, request, *args, **kwargs)

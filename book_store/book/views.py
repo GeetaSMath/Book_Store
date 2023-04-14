@@ -5,8 +5,7 @@ from rest_framework.views import APIView
 from .models import Book
 from .serializers import BookSerializer, AllBookSerializer
 from user.models import User
-from user.utils import verify_superuser,verify_user
-
+from user.utils import verify_superuser, verify_user
 
 
 class BookAPI(APIView):
@@ -21,7 +20,8 @@ class BookAPI(APIView):
             logging.exception(e)
             return Response({"message": str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
-    def get(self,request):
+    @verify_user
+    def get(self, request):
         try:
             book_list = Book.objects.all()
             serializer = AllBookSerializer(book_list, many=True)
@@ -38,7 +38,7 @@ class BookAPI(APIView):
             serializer.is_valid(raise_exception=True)
             serializer.save()
             return Response({"message": "Update successful", "data": serializer.data},
-                                status=status.HTTP_201_CREATED)
+                            status=status.HTTP_201_CREATED)
         except Exception as e:
             logging.exception(e)
             return Response({"message": str(e)}, status=status.HTTP_400_BAD_REQUEST)
