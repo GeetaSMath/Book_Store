@@ -32,4 +32,3 @@ class Login(APIView):
         except Exception as err:
             logging.exception(err)
             return Response({"message": str(err)}, status=status.HTTP_400_BAD_REQUEST)
-
