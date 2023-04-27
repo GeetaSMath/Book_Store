@@ -15,12 +15,11 @@ class Register(APIView):
             serializer = RegisterSerializer(data=request.data)
             serializer.is_valid(raise_exception=True)
             serializer.save()
-            print(serializer)
             return Response({"message": "User registered successfully", 'status': 201, 'data': serializer.data},
-                            status=status.HTTP_201_CREATED)
-        except Exception as err:
-            logging.exception(err)
-            return Response({"message": str(err)}, status=status.HTTP_400_BAD_REQUEST)
+                            status=201)
+        except Exception as e:
+            logging.exception(e)
+            return Response({"message": str(e), "status": 400, "data": {}}, status=400)
 
 
 class Login(APIView):
@@ -36,7 +35,7 @@ class Login(APIView):
                 login(request,user)
                 token = JWT().encode(data={"user_id": user.id})
                 return Response({"message": "login succesfully", "token": token, "status": 201}, status=201)
-            return Response({"message": "invalid credentials ", "status": 406}, status=406)
+            return Response({"message": "invalid credentials ", "status": 400}, status=400)
         except Exception as e:
             logging.exception(e)
             return Response({"data": {}, "message": e.args[0], "status": 400}, status=400)

@@ -51,8 +51,9 @@ def verify_superuser(function):
         if not user.is_superuser:
             return Response({"Message": "permission denied"}, status=400)
 
-
+        request.data._mutable=True
         request.data.update({"user":user.id})
+        request.data._mutable=False
 
         return function(self, request, *args, **kwargs)
 

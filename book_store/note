@@ -1,0 +1,64 @@
+backend--ser----frontend
+
+we are achiving to delivery data into client in as json
+to use for developers in python
+example we have model object ..-->model instance
+..complex data---serialzation....native python-----json
+i want conver model instancec to python dict
+
+response----in json
+return response is in httpresponse
+
+
+#VIEW SET API
+API---application programming interface
+example--online shopping
+function-based views.
+class-based views.
+mixins.
+generic view classes.
+viewsets.
+---- FBVs are useful for simple use cases where the view logic can be easily defined within a single function.
+----- offer a higher level of abstraction and organization over FBVs, making them ideal for complex use cases
+---Mixins are reusable components that can be added to CBVs to extend their functionality.
+They are small classes that provide specific functionality, such as pagination or filtering
+----eneric view classes are a set of pre-built CBVs provided by Django that implement common functionality,
+such as list and detail views.
+
+---FUNCTION BASED EXAMPLE
+                        from django.http import HttpResponse
+
+                        def hello_world(request):
+                            return HttpResponse("Hello, World!")
+---CLASS BASED EXAMPLE
+                        from django.views import View
+                        from django.http import HttpResponse
+
+                        class HelloWorldView(View):
+                            def get(self, request):
+                                return HttpResponse("Hello, World!")
+---MIXIN BASED EXAMPLE
+                        from django.views.generic import ListView
+                        from django.contrib.auth.mixins import LoginRequiredMixin
+
+                        class ProtectedListView(LoginRequiredMixin, ListView):
+                            model = MyModel
+                            template_name = "my_template.html"
+---GENERIC BASED EXAMPLE
+from django.views.generic import ListView, DetailView
+from .models import MyModel
+
+                        class MyModelListView(ListView):
+                            model = MyModel
+                            template_name = "my_template.html"
+
+                        class MyModelDetailView(DetailView):
+                            model = MyModel
+                            template_name = "my_template.html"
+
+
+
+JWT
+
+JWT tokens are used for authentication and authorization purposes.
+Secure communication

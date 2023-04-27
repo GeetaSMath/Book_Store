@@ -2,7 +2,6 @@ from django.contrib.auth import authenticate
 from rest_framework import serializers
 from .models import User
 
-
 class LoginSerializer(serializers.Serializer):
     username = serializers.CharField(max_length=50)
     password = serializers.CharField(max_length=50)
@@ -17,7 +16,7 @@ class LoginSerializer(serializers.Serializer):
 class RegisterSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['id', 'username', 'email', 'password', 'phone', 'location', 'first_name', 'last_name']
+        fields = ['id', 'username', 'email', 'password', 'phone', 'location', 'first_name', 'last_name','is_superuser']
         extra_kwargs = {'password': {'write_only': True}}
 
     def create(self, validated_data):

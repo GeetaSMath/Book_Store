@@ -15,7 +15,8 @@ class BookAPI(APIView):
             serializer = BookSerializer(data=request.data)
             serializer.is_valid(raise_exception=True)
             serializer.save()
-            return Response({"message": "Book added", "data": serializer.data}, status=status.HTTP_201_CREATED)
+            return Response({"message": "Book Created successfully", 'status': 201, 'data': serializer.data},
+                            status=201)
         except Exception as e:
             logging.exception(e)
             return Response({"message": str(e)}, status=status.HTTP_400_BAD_REQUEST)
@@ -48,7 +49,7 @@ class BookAPI(APIView):
         try:
             book_object = Book.objects.get(id=request.data.get("id"))
             book_object.delete()
-            return Response({"message": "Book deleted"}, status=status.HTTP_200_OK)
+            return Response({"message": "Book deleted"}, status=200)
         except Exception as e:
             logging.exception(e)
-            return Response({"message": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"message": str(e)}, status=400)
